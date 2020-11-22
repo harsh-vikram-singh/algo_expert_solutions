@@ -1,29 +1,28 @@
 function hasSingleCycle(array) {
-  // debugger;
-  let memo = new Map();
-  let i = 0;
-  while (!memo.has(i)) {
-    let nextIndex = getNextIndex(array[i] + i, array.length);
-    memo.set(i, nextIndex);
-    i = nextIndex;
+  debugger;
+  let startIndex = 0;
+  let currentIndex = 0;
+  let elementsVisited = 0;
+  while (elementsVisited < array.length) {
+    if (currentIndex === 0 && elementsVisited > 0) {
+      return false;
+    }
+    currentIndex = getNextIndex(array[currentIndex], array.length);
+    elementsVisited += 1;
   }
-  if (memo.size === array.length) {
-    return true;
-  } else {
-    return false;
-  }
+  return currentIndex === startIndex;
 }
 
-function getNextIndex(index, length) {
+function getNextIndex(arrayValueAtIndex, length) {
   let maxIndex = length - 1;
-  if ((index > 0) && (index < length)) {
-    return index;
-  } else if (index < 0) {
-    let absVal = Math.abs(index);
+  if ((arrayValueAtIndex > 0) && (arrayValueAtIndex < length)) {
+    return arrayValueAtIndex;
+  } else if (arrayValueAtIndex < 0) {
+    let absVal = Math.abs(arrayValueAtIndex);
     let mod = absVal % length;
     return length - mod;
   } else {
-    let mod = index % length;
+    let mod = arrayValueAtIndex % length;
     return mod;
   }
 }
